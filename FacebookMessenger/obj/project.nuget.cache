@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "hALMODn7fqQV+71I6JGa25fcc2qPemSB6JyTGg46CfXZmMFxDVgROMX9Ydj3YALOWzDdssBqrQi8xP2MxrpK4w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Kyaw\\source\\repos\\FBChat\\FacebookMessenger\\FacebookMessenger.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Kyaw\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\Kyaw\\.nuget\\packages\\serilog\\2.9.0\\serilog.2.9.0.nupkg.sha512",
+    "C:\\Users\\Kyaw\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.0.1\\microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512",
+    "C:\\Users\\Kyaw\\.nuget\\packages\\microsoft.netcore.app.ref\\3.0.0\\microsoft.netcore.app.ref.3.0.0.nupkg.sha512",
+    "C:\\Users\\Kyaw\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.0.0\\microsoft.windowsdesktop.app.ref.3.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

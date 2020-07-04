@@ -1,0 +1,70 @@
+2020-06-27 02:39:13.276 +08:00 [INFO] | User profile is available. Using 'C:\Users\Kyaw\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-06-27 02:39:13.698 +08:00 [INFO] | Application started. Press Ctrl+C to shut down.
+2020-06-27 02:39:13.698 +08:00 [INFO] | Hosting environment: Development
+2020-06-27 02:39:13.698 +08:00 [INFO] | Content root path: C:\Users\Kyaw\source\repos\FBChat\FBChat
+2020-06-27 02:39:13.741 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/  
+2020-06-27 02:39:13.768 +08:00 [INFO] | Executing endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 02:39:13.826 +08:00 [INFO] | Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller FBChat.Controllers.HomeController (FBChat).
+2020-06-27 02:39:13.857 +08:00 [INFO] | facebook setting :  
+2020-06-27 02:42:25.167 +08:00 [INFO] | User profile is available. Using 'C:\Users\Kyaw\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-06-27 02:42:25.418 +08:00 [INFO] | Application started. Press Ctrl+C to shut down.
+2020-06-27 02:42:25.418 +08:00 [INFO] | Hosting environment: Development
+2020-06-27 02:42:25.418 +08:00 [INFO] | Content root path: C:\Users\Kyaw\source\repos\FBChat\FBChat
+2020-06-27 02:42:25.457 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/  
+2020-06-27 02:42:25.483 +08:00 [INFO] | Executing endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 02:42:25.520 +08:00 [INFO] | Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller FBChat.Controllers.HomeController (FBChat).
+2020-06-27 02:43:33.908 +08:00 [INFO] | User profile is available. Using 'C:\Users\Kyaw\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-06-27 02:43:34.151 +08:00 [INFO] | Application started. Press Ctrl+C to shut down.
+2020-06-27 02:43:34.151 +08:00 [INFO] | Hosting environment: Development
+2020-06-27 02:43:34.151 +08:00 [INFO] | Content root path: C:\Users\Kyaw\source\repos\FBChat\FBChat
+2020-06-27 02:43:34.192 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/  
+2020-06-27 02:43:34.220 +08:00 [INFO] | Executing endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 02:43:34.261 +08:00 [INFO] | Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller FBChat.Controllers.HomeController (FBChat).
+2020-06-27 02:57:40.586 +08:00 [INFO] | User profile is available. Using 'C:\Users\Kyaw\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-06-27 02:57:40.819 +08:00 [INFO] | Application started. Press Ctrl+C to shut down.
+2020-06-27 02:57:40.819 +08:00 [INFO] | Hosting environment: Development
+2020-06-27 02:57:40.819 +08:00 [INFO] | Content root path: C:\Users\Kyaw\source\repos\FBChat\FBChat
+2020-06-27 02:57:40.856 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/  
+2020-06-27 02:57:40.881 +08:00 [INFO] | Executing endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 02:57:41.690 +08:00 [INFO] | Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller FBChat.Controllers.HomeController (FBChat).
+2020-06-27 02:59:43.115 +08:00 [INFO] | User profile is available. Using 'C:\Users\Kyaw\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-06-27 02:59:43.363 +08:00 [INFO] | Application started. Press Ctrl+C to shut down.
+2020-06-27 02:59:43.363 +08:00 [INFO] | Hosting environment: Development
+2020-06-27 02:59:43.364 +08:00 [INFO] | Content root path: C:\Users\Kyaw\source\repos\FBChat\FBChat
+2020-06-27 02:59:43.406 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/  
+2020-06-27 02:59:43.433 +08:00 [INFO] | Executing endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 02:59:43.481 +08:00 [INFO] | Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller FBChat.Controllers.HomeController (FBChat).
+2020-06-27 03:00:41.384 +08:00 [INFO] | User profile is available. Using 'C:\Users\Kyaw\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-06-27 03:00:41.650 +08:00 [INFO] | Application started. Press Ctrl+C to shut down.
+2020-06-27 03:00:41.650 +08:00 [INFO] | Hosting environment: Development
+2020-06-27 03:00:41.650 +08:00 [INFO] | Content root path: C:\Users\Kyaw\source\repos\FBChat\FBChat
+2020-06-27 03:00:41.689 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/  
+2020-06-27 03:00:41.714 +08:00 [INFO] | Executing endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 03:00:41.752 +08:00 [INFO] | Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller FBChat.Controllers.HomeController (FBChat).
+2020-06-27 03:04:12.461 +08:00 [INFO] | User profile is available. Using 'C:\Users\Kyaw\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-06-27 03:04:12.709 +08:00 [INFO] | Application started. Press Ctrl+C to shut down.
+2020-06-27 03:04:12.709 +08:00 [INFO] | Hosting environment: Development
+2020-06-27 03:04:12.709 +08:00 [INFO] | Content root path: C:\Users\Kyaw\source\repos\FBChat\FBChat
+2020-06-27 03:04:12.755 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/  
+2020-06-27 03:04:12.782 +08:00 [INFO] | Executing endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 03:04:12.820 +08:00 [INFO] | Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller FBChat.Controllers.HomeController (FBChat).
+2020-06-27 03:04:17.672 +08:00 [INFO] | Executing ViewResult, running view Index.
+2020-06-27 03:04:17.797 +08:00 [INFO] | Executed ViewResult - view Index executed in 130.1129ms.
+2020-06-27 03:04:17.800 +08:00 [INFO] | Executed action FBChat.Controllers.HomeController.Index (FBChat) in 4980.0063ms
+2020-06-27 03:04:17.801 +08:00 [INFO] | Executed endpoint 'FBChat.Controllers.HomeController.Index (FBChat)'
+2020-06-27 03:04:17.805 +08:00 [INFO] | Request finished in 5051.8701ms 200 text/html; charset=utf-8
+2020-06-27 03:04:17.826 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/lib/bootstrap/dist/css/bootstrap.min.css  
+2020-06-27 03:04:17.831 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/lib/jquery/dist/jquery.min.js  
+2020-06-27 03:04:17.831 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/css/site.css  
+2020-06-27 03:04:17.834 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0  
+2020-06-27 03:04:17.842 +08:00 [INFO] | Request starting HTTP/2.0 GET https://localhost:44367/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+2020-06-27 03:04:17.850 +08:00 [INFO] | Sending file. Request path: '/css/site.css'. Physical path: 'C:\Users\Kyaw\source\repos\FBChat\FBChat\wwwroot\css\site.css'
+2020-06-27 03:04:17.850 +08:00 [INFO] | Sending file. Request path: '/js/site.js'. Physical path: 'C:\Users\Kyaw\source\repos\FBChat\FBChat\wwwroot\js\site.js'
+2020-06-27 03:04:17.850 +08:00 [INFO] | Request finished in 19.2226ms 200 text/css
+2020-06-27 03:04:17.850 +08:00 [INFO] | Request finished in 15.8644ms 200 application/javascript
+2020-06-27 03:04:17.863 +08:00 [INFO] | Sending file. Request path: '/lib/bootstrap/dist/css/bootstrap.min.css'. Physical path: 'C:\Users\Kyaw\source\repos\FBChat\FBChat\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css'
+2020-06-27 03:04:17.864 +08:00 [INFO] | Request finished in 38.0846ms 200 text/css
+2020-06-27 03:04:17.909 +08:00 [INFO] | Sending file. Request path: '/lib/bootstrap/dist/js/bootstrap.bundle.min.js'. Physical path: 'C:\Users\Kyaw\source\repos\FBChat\FBChat\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js'
+2020-06-27 03:04:17.909 +08:00 [INFO] | Request finished in 67.2114ms 200 application/javascript
+2020-06-27 03:04:17.918 +08:00 [INFO] | Sending file. Request path: '/lib/jquery/dist/jquery.min.js'. Physical path: 'C:\Users\Kyaw\source\repos\FBChat\FBChat\wwwroot\lib\jquery\dist\jquery.min.js'
+2020-06-27 03:04:17.918 +08:00 [INFO] | Request finished in 86.5413ms 200 application/javascript

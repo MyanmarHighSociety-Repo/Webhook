@@ -1,0 +1,4 @@
+C:\Users\Kyaw\source\repos\FBChat\FlowManager\FlowManager\obj\Debug\netcoreapp3.1\FlowManager.csprojAssemblyReference.cache
+C:\Users\Kyaw\source\repos\FBChat\FlowManager\FlowManager\obj\Debug\netcoreapp3.1\FlowManager.AssemblyInfoInputs.cache
+C:\Users\Kyaw\source\repos\FBChat\FlowManager\FlowManager\obj\Debug\netcoreapp3.1\FlowManager.AssemblyInfo.cs
+C:\Users\Kyaw\source\repos\FBChat\FlowManager\FlowManager\obj\Debug\netcoreapp3.1\FlowManager.csproj.CoreCompileInputs.cache

@@ -1,0 +1,9 @@
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\obj\Debug\netcoreapp3.0\FacebookMessenger.AssemblyInfoInputs.cache
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\obj\Debug\netcoreapp3.0\FacebookMessenger.AssemblyInfo.cs
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\obj\Debug\netcoreapp3.0\FacebookMessenger.csproj.CoreCompileInputs.cache
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\bin\Debug\netcoreapp3.0\FacebookMessenger.deps.json
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\bin\Debug\netcoreapp3.0\FacebookMessenger.dll
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\bin\Debug\netcoreapp3.0\FacebookMessenger.pdb
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\obj\Debug\netcoreapp3.0\FacebookMessenger.dll
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\obj\Debug\netcoreapp3.0\FacebookMessenger.pdb
+C:\Users\Kyaw\source\repos\FBChat\FacebookMessenger\obj\Debug\netcoreapp3.0\FacebookMessenger.csprojAssemblyReference.cache
