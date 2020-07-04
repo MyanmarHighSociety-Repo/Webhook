@@ -19,6 +19,7 @@ namespace FacebookMessenger.Models
 
         [JsonProperty("messenger_extensions")]
         public bool? MessengerExtensions { get; set; }
-         
+
+
     }
 }

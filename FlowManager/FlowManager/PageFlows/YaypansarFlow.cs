@@ -10,16 +10,19 @@ using System.Threading;
 
 namespace FlowController.PageFlows
 {
-    public class YaypansarFlow : PageFlow
+    internal class YaypansarFlow : PageFlow
     {
-        private string currentHost;
-        public YaypansarFlow()
+        internal YaypansarFlow(PageModel page, String hostURL): base(page, hostURL)
         {
-            currentHost = System.Net.Dns.GetHostName();
-            Log.Information("HostName " + currentHost);
+
         }
 
-        public override void ProcessFlow(RequestMessagingModel messaging, PageModel page, Action<ResponseModel,String> actResponse)
+        internal override void Init()
+        {
+          
+        }
+
+        internal override void ProcessFlow(RequestMessagingModel messaging, Action<ResponseModel,String> actResponse)
         {
 
             ResponseModel response = new ResponseModel();
@@ -38,12 +41,12 @@ namespace FlowController.PageFlows
                         messaging.Message.Text.ToLower().Contains("hi")))
                     {
                         GetStarted(ref response);
-                        actResponse(response,FacebookMessenger.FacebookURL.Message_V70URL);
+                        actResponse(response,FacebookMessenger.FacebookApiURL.Message_V70URL);
 
                         Thread.Sleep(2000);
 
                         ViewMore(ref response);
-                        actResponse(response, FacebookMessenger.FacebookURL.Message_V70URL);
+                        actResponse(response, FacebookMessenger.FacebookApiURL.Message_V70URL);
                     } 
                     else
                     {
@@ -79,7 +82,7 @@ namespace FlowController.PageFlows
                         {
                             new ElementModel() {
                                 Title = "Welcome " + UserInfo.FirstName + ",",
-                                ImageURL = currentHost + "/image/shirts/shirt1.jpg",
+                                ImageURL = HostURL + "/image/shirts/shirt1.jpg",
                                 SubTitle = "This is subtitle. It is useful to describe what you want customer to know about your chatbot.",
                                 Buttons = new List<ButtonModel>()
                                 {
@@ -97,7 +100,7 @@ namespace FlowController.PageFlows
                             },
                             new ElementModel() {
                                 Title = "This is seconde element for testing,",
-                                ImageURL = currentHost + "/image/shirts/shirt2.jpg",
+                                ImageURL = HostURL + "/image/shirts/shirt2.jpg",
                                 SubTitle = "Second element subtitle",
                                 Buttons = new List<ButtonModel>()
                                 {
@@ -139,7 +142,7 @@ namespace FlowController.PageFlows
                         {
                             new ElementModel() {
                                 Title = "Classic T-Shirt Collection",
-                                ImageURL = currentHost + "/image/shirts/shirt3.png",
+                                ImageURL = HostURL + "/image/shirts/shirt3.png",
                                 SubTitle = "See all our colors.",
                                 Buttons = new List<ButtonModel>()
                                 {
@@ -155,7 +158,7 @@ namespace FlowController.PageFlows
 
                              new ElementModel() {
                                 Title = "Classic White T-Shirt",
-                                ImageURL = currentHost + "/image/shirts/shirt3.png",
+                                ImageURL = HostURL + "/image/shirts/shirt3.png",
                                 SubTitle = "See all our colors",
                                 DefaultAction = new ActionModel()
                                 {

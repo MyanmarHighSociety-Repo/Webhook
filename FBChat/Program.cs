@@ -14,7 +14,7 @@ namespace FBChat
 {
     public class Program
     {
-        private static string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u4}] | {Message:l}{NewLine}{Exception}";
+        private static string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} ({ThreadID}) [{Level:u4}] | {Message:l}{NewLine}{Exception}";
         
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())

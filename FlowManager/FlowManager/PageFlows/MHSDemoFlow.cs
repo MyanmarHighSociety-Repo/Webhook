@@ -6,16 +6,43 @@ using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Threading;
 
 namespace FlowController.PageFlows
 {
-    public class MHSDemoFlow : PageFlow
+    internal class MHSDemoFlow : PageFlow
     {
-        private string Host = "https://api.shopdoora.com/webhook";
 
-        public override void ProcessFlow(RequestMessagingModel messaging, PageModel page, Action<ResponseModel, String> actResponse)
+
+        internal MHSDemoFlow(PageModel page, String hostURL) : base(page, hostURL) {
+
+        }
+
+        #region "Init Flow"
+        internal override void Init()
+        {
+            Create_GetStartButton();          
+        }
+
+        private void Create_GetStartButton()
+        {
+            var getStartRequest = new GetStartRequestModel()
+            {
+                GetStart = new GetStartModel()
+                {
+                    Payload = "get-started"
+                }
+            };
+            MessageHandler.ResponseMessage(getStartRequest, this.Page.Token, FacebookApiURL.Profile_V70URL);
+
+        }
+
+        #endregion "Init Flow"
+
+        #region "Process Flow"
+        internal override void ProcessFlow(RequestMessagingModel messaging, Action<ResponseModel, String> actResponse)
         {
 
             ResponseModel response = new ResponseModel();
@@ -34,14 +61,15 @@ namespace FlowController.PageFlows
 
                     if (messaging.Postback.Payload == "get-started")
                     {
+                        Create_PersistenceMenu(response.Receiver.ID);
                         Shopping(ref response);
-                        actResponse(response, FacebookURL.Message_V70URL);
+                        actResponse(response, FacebookApiURL.Message_V70URL);
                     }
                     else if (messaging.Postback.Payload == "view-more")
                     {
                         ViewMore(ref response);
-                        actResponse(response,FacebookURL.Message_V26URL);
-                         
+                        actResponse(response, FacebookApiURL.Message_V26URL);
+
                     }
                 }
 
@@ -51,18 +79,18 @@ namespace FlowController.PageFlows
                         (messaging.Message.Text.ToLower().Contains("hello") ||
                         messaging.Message.Text.ToLower().Contains("hi")))
                     {
-                        Msg_Greeting(ref response, page);
-                        actResponse(response,FacebookURL.Profile_V70URL);
+                        Msg_Greeting(ref response);
+                        actResponse(response, FacebookApiURL.Profile_V70URL);
 
                         Thread.Sleep(1000);
 
-                        PickColor(ref response,page);
-                        actResponse(response, FacebookURL.Message_V70URL);
+                        PickColor(ref response);
+                        actResponse(response, FacebookApiURL.Message_V70URL);
                     }
                     else if (messaging.Message.QuickReply != null)
                     {
                         process_quickReply(messaging.Message.QuickReply, ref response);
-                        actResponse(response, FacebookURL.Message_V70URL);
+                        actResponse(response, FacebookApiURL.Message_V70URL);
                     }
                     //else
                     //{
@@ -84,13 +112,14 @@ namespace FlowController.PageFlows
 
         }
 
-        private void Msg_Greeting(ref ResponseModel response, PageModel page)
+        private void Msg_Greeting(ref ResponseModel response)
         {
+           
             Log.Information("This is gretting message");
             response.Message = new ResponseMessageModel()
             {
-                Text = String.Format("Hi {0}, what can I help you?", MessageHandler.GetProfileInfo(response.Receiver.ID, page).Result?.FirstName)
-            }; 
+                Text = String.Format("Hi {0}, what can I help you?", MessageHandler.GetProfileInfo(response.Receiver.ID, this.Page).Result?.FirstName)
+            };
         }
 
         private void process_quickReply(QuickReplyRequestModel quickReply, ref ResponseModel response)
@@ -116,11 +145,11 @@ namespace FlowController.PageFlows
             }
         }
 
-        private void PickColor(ref ResponseModel response, PageModel page)
-        {           
+        private void PickColor(ref ResponseModel response)
+        {
             response.Message = new QuickReplyMessageModel()
             {
-                Text = String.Format(@"Hi {0}, please pick a color :", MessageHandler.GetProfileInfo(response.Receiver.ID, page).Result?.FirstName),
+                Text = String.Format(@"Hi {0}, please pick a color :", MessageHandler.GetProfileInfo(response.Receiver.ID, this.Page).Result?.FirstName),
 
                 QickReplies = new List<QuickReplyResponseModel>() {
                         new QuickReplyResponseModel()
@@ -128,7 +157,7 @@ namespace FlowController.PageFlows
                             ContentType = ContentType.Text,
                             Title = "Red",
                             Payload = "pick-red",
-                            Image = Host + "/image/buttons/red.png"
+                            Image = HostURL + "/image/buttons/red.png"
 
                         },
                         new QuickReplyResponseModel()
@@ -136,7 +165,7 @@ namespace FlowController.PageFlows
                             ContentType = ContentType.Text,
                             Title = "Green",
                             Payload = "pick-green",
-                            Image = Host + "/image/buttons/green.jpg"
+                            Image = HostURL + "/image/buttons/green.jpg"
 
                         },
                         new QuickReplyResponseModel()
@@ -144,7 +173,7 @@ namespace FlowController.PageFlows
                             ContentType = ContentType.Text,
                             Title = "Shopping",
                             Payload = "pick-shopping",
-                            Image = Host + "/image/buttons/shopping.jpg"
+                            Image = HostURL + "/image/buttons/shopping.jpg"
 
                         }
                 }
@@ -166,12 +195,12 @@ namespace FlowController.PageFlows
                         {
                             new ElementModel() {
                                 Title = "Element 1",
-                                ImageURL = Host + "/image/shirts/shirt1.jpg",
+                                ImageURL = HostURL + "/image/shirts/shirt1.jpg",
                                 SubTitle = "This is subtitle. It is useful to describe what you want customer to know about your chatbot.",
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  Host + "?item=12312323",
+                                    URL =  HostURL + "?item=12312323",
                                     WebviewHeight = WebviewHeightRatio.full
                                 },
                                 Buttons = new List<ButtonModel>()
@@ -184,34 +213,10 @@ namespace FlowController.PageFlows
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL = "https://api.shopdoora.com/webhook?item=12312323"
-                                    }
-                                }
-                            },new ElementModel() {
-                                Title = "Element 2",
-                                ImageURL = Host + "/image/shirts/shirt2.jpg",
-                                SubTitle = "This is subtitle. It is useful to describe what you want customer to know about your chatbot.",
-                                DefaultAction = new ActionModel()
-                                {
-                                    Type = ActionType.web_url,
-                                    URL =  Host + "?item=12312323",
-                                    WebviewHeight = WebviewHeightRatio.compact
-                                },
-                                Buttons = new List<ButtonModel>()
-                                {
-                                    new ButtonModel() {
-                                        Title = "View More",
-                                        Type = ActionType.postback,
-                                        Payload = "view-more"
-                                    },
-                                    new ButtonModel() {
-                                        Title = "Order",
-                                        Type = ActionType.web_url,
-                                        URL = "https://api.shopdoora.com/webhook?item=12312323"
+                                        URL = HostURL+"/item?id=12312323"
                                     }
                                 }
                             }
-
                         }
 
                     }
@@ -223,28 +228,28 @@ namespace FlowController.PageFlows
         {
             response.Message = new TemplateMessageModel()
             {
-                
+
                 Attachment = new AttachmentModel()
-                {                    
+                {
                     Type = AttachmentType.template,
                     Payload = new AttachmentPayloadModel()
                     {
-                        
+
                         Type = TemplateType.generic,
                         Elements = new List<ElementModel>()
                         {
                             new ElementModel() {
                                 Title = "Element 1",
-                                ImageURL = Host + "/image/shirts/shirt1.jpg",
+                                ImageURL = HostURL + "/image/shirts/shirt1.jpg",
                                 SubTitle = "This is subtitle. It is useful to describe what you want customer to know about your chatbot.",
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  Host + "?item=12312323",
+                                    URL =  HostURL + "?item=12312323",
                                     WebviewHeight = WebviewHeightRatio.compact
                                 },
                                 Buttons = new List<ButtonModel>()
-                                { 
+                                {
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
@@ -253,16 +258,16 @@ namespace FlowController.PageFlows
                                 }
                             },new ElementModel() {
                                 Title = "Element 2",
-                                ImageURL = Host + "/image/shirts/shirt2.jpg",
+                                ImageURL = HostURL + "/image/shirts/shirt2.jpg",
                                 SubTitle = "This is subtitle. It is useful to describe what you want customer to know about your chatbot.",
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  Host + "?item=12312323",
+                                    URL =  HostURL + "?item=12312323",
                                     WebviewHeight = WebviewHeightRatio.compact
                                 },
                                 Buttons = new List<ButtonModel>()
-                                { 
+                                {
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
@@ -272,12 +277,12 @@ namespace FlowController.PageFlows
                             },
                             new ElementModel() {
                                 Title = "Element 3",
-                                ImageURL = Host + "/image/shirts/shirt3.png",
+                                ImageURL = HostURL + "/image/shirts/shirt3.png",
                                 SubTitle = "This is subtitle. It is useful to describe what you want customer to know about your chatbot.",
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  Host + "?item=12312323",
+                                    URL =  HostURL + "?item=12312323",
                                     WebviewHeight = WebviewHeightRatio.compact
                                 },
                                 Buttons = new List<ButtonModel>()
@@ -314,29 +319,29 @@ namespace FlowController.PageFlows
                         {
                             new ElementModel() {
                                 Title = "Classic T-Shirt Collection",
-                                ImageURL = Host + "/image/shirts/shirt3.png",
+                                ImageURL = HostURL + "/image/shirts/shirt3.png",
                                 SubTitle = "See all our colors.",
                                 Buttons = new List<ButtonModel>()
                                 {
                                     new ButtonModel() {
                                         Title = "View",
                                         Type = ActionType.web_url,
-                                        URL = Host + "/collection",
+                                        URL = HostURL + "/collection",
                                         MessengerExtensions = true,
                                         WebviewHeight = WebviewHeightRatio.tall,
-                                        FallbackURL = Host + "/collection"
+                                        FallbackURL = HostURL + "/collection"
                                     }
                                 }
                             },
 
                              new ElementModel() {
                                 Title = "Classic White T-Shirt",
-                                ImageURL = Host + "/image/shirts/shirt3.png",
+                                ImageURL = HostURL + "/image/shirts/shirt3.png",
                                 SubTitle = "See all our colors",
                                 DefaultAction = new ActionModel()
                                 {
                                         Type = ActionType.web_url,
-                                        URL = Host + "/view?item=100",
+                                        URL = HostURL + "/view?item=100",
                                         MessengerExtensions = false,
                                         WebviewHeight = WebviewHeightRatio.tall
 
@@ -345,12 +350,12 @@ namespace FlowController.PageFlows
 
                             new ElementModel() {
                                 Title = "Classic Blue  T-Shirt",
-                                ImageURL = Host + "/image/shirts/shirt3.png",
+                                ImageURL = HostURL + "/image/shirts/shirt3.png",
                                 SubTitle = "100% Cotton, 200% Comfortable",
                                 DefaultAction = new ActionModel()
                                 {
                                         Type = ActionType.web_url,
-                                        URL = Host + "/view?item=101",
+                                        URL = HostURL + "/view?item=101",
                                         MessengerExtensions = true,
                                         WebviewHeight = WebviewHeightRatio.tall
 
@@ -361,10 +366,10 @@ namespace FlowController.PageFlows
                                     {
                                         Title =  "Shop Now",
                                         Type =  ActionType.web_url,
-                                        URL =Host + "/shop?item=101",
+                                        URL =HostURL + "/shop?item=101",
                                         MessengerExtensions = true,
                                         WebviewHeight = WebviewHeightRatio.tall,
-                                        FallbackURL =  Host + "/fallback"
+                                        FallbackURL =  HostURL + "/fallback"
                                     }
 
                                 }
@@ -387,6 +392,51 @@ namespace FlowController.PageFlows
         }
 
 
+        private void Create_PersistenceMenu(string psid)
+        {
+            var menuRequest = new PersistentMenuRequestModel()
+            {
+                PSID = psid,
+
+                Menu = new List<PersistentMenuItemModel>()
+                {
+
+                    new PersistentMenuItemModel()
+                    {
+                        Locale = "default",
+                        ComposerInputDisabled = false,
+                        Actions = new List<MenuActionModel>()
+                        {
+                            new MenuActionModel()
+                            {
+                                Type = ActionType.postback,
+                                Title = "Talk to an agent",
+                                Payload = "CARE_HELP"
+                            },
+                             new MenuActionModel()
+                            {
+                                Type = ActionType.postback,
+                                Title = "View More",
+                                Payload = "view-more"
+                            },
+                              new MenuActionModel()
+                            {
+                                Type = ActionType.web_url,
+                                Title = "Visit to Website",
+                                URL = this.HostURL
+                            }
+
+                        }
+                    }
+                }
+            };
+
+            MessageHandler.ResponseMessage(menuRequest, this.Page.Token, FacebookApiURL.CustomUserSettings_V70URL);
+        }
+
+        #endregion "Process Flow"
+
     }
+
 }
  

@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace FlowController.PageFlows
 {
-    public abstract class PageFlow
+    internal abstract class PageFlow
     {
-        public abstract void ProcessFlow(RequestMessagingModel pEntry, PageModel page, Action<ResponseModel,String> actResponse);
+        internal PageModel Page;
+        internal String HostURL;
+
+        internal PageFlow(PageModel page, String hostURL)
+        {
+            Page = page;
+            HostURL = hostURL;
+            this.Init();
+        }
+        internal abstract void Init();
+        internal abstract void ProcessFlow(RequestMessagingModel pEntry, Action<ResponseModel,String> actResponse);
+
+       
+
     }
 }

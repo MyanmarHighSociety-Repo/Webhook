@@ -100,37 +100,8 @@ namespace FBChat.Controllers
                     {
                         flowManager.ProcessFlow(request, (response, page, api) =>
                         {
-
                             log.LogInformation("Response Type" + response.Message.GetType().Name);
-                            var responseAwait = MessageHandler.ResponseToFB(response, page, api).GetAwaiter();
-
-                            responseAwait.OnCompleted(() =>
-                            {
-                                try
-                                {
-                                    var resMsg = responseAwait.GetResult();
-                                    log.LogInformation(String.Format(@"StatusCode : {0}, Reason {1}", resMsg.StatusCode, resMsg.ReasonPhrase));
-
-                                    var content = resMsg.Content.ReadAsStringAsync().GetAwaiter();
-                                    content.OnCompleted(() =>
-                                    {
-                                        try
-                                        {
-                                            var resultStr = content.GetResult();
-                                            log.LogInformation(String.Format(@"Response content {0}", resultStr));
-                                        }
-                                        catch (Exception err)
-                                        {
-                                            log.LogError("Response content." + err.Message);
-                                        }
-                            });
-                                }
-                                catch (Exception err)
-                                {
-                                    log.LogError("ResponseAwait error." + err.Message);
-                                }
-                            });
-
+                            MessageHandler.ResponseMessage(response, page, api);
                         });
                     }catch(Exception err)
                     {
@@ -163,24 +134,12 @@ namespace FBChat.Controllers
             var request = JsonConvert.DeserializeObject<RequestModel>(data);
             log.LogInformation("Entry count " + request.Entries.Count);
 
-            flowManager.ProcessFlow(request, (response, page, api) =>
+            flowManager.ProcessFlow(request, (response, token, api) =>
             {
                 log.LogInformation("Response Type" + response?.Message.GetType().Name);
-                var responseAwait = MessageHandler.ResponseToFB(response, page, api).GetAwaiter();
+                MessageHandler.ResponseMessage(response, token, api);
 
-                responseAwait.OnCompleted(() =>
-                {
-                    var resMsg = responseAwait.GetResult();
-                    var content = resMsg.Content.ReadAsStringAsync().GetAwaiter();
-
-                    content.OnCompleted(() =>
-                    {
-                       var resultStr =  content.GetResult(); log.LogInformation(String.Format(@"Response content {0}", resultStr));
-                    });
-
-
-                    log.LogInformation(String.Format(@" StatusCode : {0}, Reason {1}", resMsg.StatusCode, resMsg.ReasonPhrase));
-                });
+               
             });
         }
     }

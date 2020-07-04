@@ -26,10 +26,40 @@ namespace FacebookMessenger
             return JsonConvert.DeserializeObject<RequestModel>(json);
         }
 
+        public static void ResponseMessage(object msg, string token, string postURL = FacebookApiURL.Message_V70URL)
+        {
+            try
+            {
+                var responseAwait = HttpHelper.HttpPostRequest(postURL, JsonConvert.SerializeObject(msg), token).GetAwaiter();
+                responseAwait.OnCompleted(() =>
+                {
+                    try
+                    {
+                        var resMsg = responseAwait.GetResult();
+                        var content = resMsg.Content.ReadAsStringAsync().GetAwaiter();
 
+                        content.OnCompleted(() =>
+                        {
+                            var resultStr = content.GetResult(); Log.Information(String.Format(@"Response content {0}", resultStr));
+                        });
+
+                        Log.Information(String.Format(@" StatusCode : {0}, Reason {1}", resMsg.StatusCode, resMsg.ReasonPhrase));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("ResponseMessage Inner Block => " + ex.Message);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Log.Error("ResponseMessage => " + ex.Message);
+            }
+        }
+         
         public static async Task<PersonProfileModel> GetProfileInfo(string PSID, PageModel page)
         {
-            Task<HttpResponseMessage> task =  HttpHelper.HttpGetRequest(FacebookURL.GraphURL + "/" + PSID, "fields=first_name,last_name,profile_pic", page.Token);
+            Task<HttpResponseMessage> task =  HttpHelper.HttpGetRequest(FacebookApiURL.GraphURL + "/" + PSID, "fields=first_name,last_name,profile_pic", page.Token);
             var responseAwait = await task;
             var content = await responseAwait.Content.ReadAsStringAsync();
 
@@ -38,13 +68,7 @@ namespace FacebookMessenger
 
             return JsonConvert.DeserializeObject<PersonProfileModel>(content); 
         }
+         
 
-
-        public static Task<HttpResponseMessage> ResponseToFB(ResponseModel msg, PageModel page, string postURL = FacebookURL.Message_V70URL)
-        {      
-            return HttpHelper.HttpPostRequest(postURL, JsonConvert.SerializeObject(msg), page.Token);
-        }
-
-       
     }
 }

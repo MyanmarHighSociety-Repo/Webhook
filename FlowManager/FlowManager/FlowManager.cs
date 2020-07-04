@@ -9,17 +9,15 @@ namespace FlowController
 {
     public class FlowManager
     {
-        private List<PageModel> Pages;
+        private string Host = "https://api.shopdoora.com/webhook";
 
-        //Need to update this if new page is added
-        private PageFlow MHSDemoFlow;
-        private PageFlow YaypansarFlow;
+        private List<PageModel> Pages;              
+        private List<PageFlow> Flows;
 
         public FlowManager()
         {
+            Flows = new List<PageFlow>();
             Pages = new List<PageModel>();
-            MHSDemoFlow = new MHSDemoFlow();
-            YaypansarFlow = new YaypansarFlow();
         }
 
         public FlowManager(List<PageModel> pages) : this()
@@ -35,7 +33,6 @@ namespace FlowController
         public bool RemovePage(PageModel page)
         {
             return Pages.Remove(page);
-
         }
 
         public bool RemovePage(string pageId)
@@ -50,7 +47,7 @@ namespace FlowController
             return false;
         }
 
-        public void ProcessFlow(RequestModel request, Action<ResponseModel, PageModel, String> callback)
+        public void ProcessFlow(RequestModel request, Action<ResponseModel, String, String> callback)
         {
             Log.Information("Start processing message.");
 
@@ -63,10 +60,10 @@ namespace FlowController
                 {
                     var requestMessaging = entry.Messaging.FirstOrDefault();
                     Log.Information("Flow type is " + pageflow.GetType().Name);
-                    var page = GetPage(entry.ID);
-                    pageflow.ProcessFlow(requestMessaging, page, (response, api) =>
+                    
+                    pageflow.ProcessFlow(requestMessaging,(response, api) =>
                      {
-                         callback(response, page, api);
+                         callback(response, pageflow.Page.Token, api);
                      });
 
                 }
@@ -80,12 +77,30 @@ namespace FlowController
                
         private PageFlow GetPageFlow(string id)
         {
+            var flow = Flows.FirstOrDefault(p => p.Page.ID == id);
+
+            if(flow != null)
+            {
+                return flow;
+            }
+            else
+            {
+               var newFlow =  CreatePageFlow(id);
+                Flows.Add(newFlow);
+                return newFlow;
+            }
+
+        }
+
+        private PageFlow CreatePageFlow(string id)
+        {
+            PageModel page = GetPage(id);
             //Need to update this if new page is added
             //These page ids are constant
             return id switch
             {
-                "112932287133096" => MHSDemoFlow,
-                "416991435163889" => YaypansarFlow,
+                "112932287133096" => new MHSDemoFlow(page, Host),
+                "416991435163889" => new YaypansarFlow(page, Host),
                 _ => null,
             };
         }
