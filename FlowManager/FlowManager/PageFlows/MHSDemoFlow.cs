@@ -211,7 +211,7 @@ namespace FlowController.PageFlows
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  HostURL + "/shopping?data=" + item0Str,
+                                    URL =  HostURL + "/home/shopping?data=" + item0Str,
                                     WebviewHeight = WebviewHeightRatio.full
                                 },
                                 Buttons = new List<ButtonModel>()
@@ -224,7 +224,7 @@ namespace FlowController.PageFlows
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL =  HostURL + "/shopping?data=" + item0Str,
+                                        URL =  HostURL + "/home/shopping?data=" + item0Str,
                                     }
                                 }
                             }
@@ -285,7 +285,7 @@ namespace FlowController.PageFlows
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL = HostURL+"/shopping?data=" + item1Str,
+                                    URL = HostURL+"/home/shopping?data=" + item1Str,
                                     WebviewHeight = WebviewHeightRatio.compact
                                 },
                                 Buttons = new List<ButtonModel>()
@@ -293,7 +293,7 @@ namespace FlowController.PageFlows
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL = HostURL+"/shopping?data=" + item1Str
+                                        URL = HostURL+"/home/shopping?data=" + item1Str
                                     }
                                 }
                             },new ElementModel() {
@@ -304,7 +304,7 @@ namespace FlowController.PageFlows
                                 {
                                     Type = ActionType.web_url,
                                     WebviewHeight = WebviewHeightRatio.compact,
-                                    URL = HostURL+"/shopping?data=" + item2Str,
+                                    URL = HostURL+"/home/shopping?data=" + item2Str,
 
                                 },
                                 Buttons = new List<ButtonModel>()
@@ -312,7 +312,7 @@ namespace FlowController.PageFlows
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL = HostURL+"/shopping?data=" + item2Str,
+                                        URL = HostURL+"/home/shopping?data=" + item2Str,
                                     }
                                 }
                             },
@@ -324,7 +324,7 @@ namespace FlowController.PageFlows
                                 {
                                     Type = ActionType.web_url,
                                     WebviewHeight = WebviewHeightRatio.compact,
-                                    URL = HostURL+"/shopping?data=" + item3Str
+                                    URL = HostURL+"/home/shopping?data=" + item3Str
                                 },
                                 Buttons = new List<ButtonModel>()
                                 {
@@ -332,7 +332,7 @@ namespace FlowController.PageFlows
                                         Title = "Order",
                                         Type = ActionType.web_url,
                                         WebviewHeight = WebviewHeightRatio.compact,
-                                        URL = HostURL+"/shopping?data=" + item3Str
+                                        URL = HostURL+"/home/shopping?data=" + item3Str
                                     }
                                 }
                             }
