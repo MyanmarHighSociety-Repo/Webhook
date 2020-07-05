@@ -19,6 +19,13 @@ using FlowController;
 using FBPage = FacebookMessenger.Models.PageModel;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Hosting;
+using FacebookMessenger.Helper;
+using System.Diagnostics.Eventing.Reader;
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
+using FacebookMessenger.Enums;
+using System.Security.AccessControl;
+using System.Reflection;
 
 namespace FBChat.Controllers
 {
@@ -41,7 +48,7 @@ namespace FBChat.Controllers
 
             if (env.EnvironmentName == "Development")
             {
-                TestMethod();
+               // TestMethod();
             }
 
         }
@@ -51,6 +58,96 @@ namespace FBChat.Controllers
         { 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Shopping(string data)
+        {
+            try
+            {
+                HttpContext.Session.SetString("order", data);
+                var order = JsonConvert.DeserializeObject<OrderModel>(Cryptography.Decrypt(data));                
+                return View(new ItemViewModel()
+                {
+                    ID = order.ItemID,
+                    Name = "Item - " + order.ItemID,
+                    Descriptions = "The item is just for testing.",
+                    Price = 10.05f,
+                });
+            }catch(Exception ex)
+            {
+                log.LogError("Shopping => " + ex.Message);
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Shopping(ItemViewModel model)
+        {
+            try
+            {
+               string hostURL = "https://api.shopdoora.com/webhook";
+               string strOrder = HttpContext.Session.GetString("order");
+               var order = JsonConvert.DeserializeObject<OrderModel>(Cryptography.Decrypt(strOrder));              
+               
+                ReceiptAttachmentPayloadModel receipt = new ReceiptAttachmentPayloadModel()
+                {
+                    Type = TemplateType.receipt,
+                    RecipientName = "",
+                    OrderNumber = "t12121",
+                    CurrencyCode = "USD",
+                    PaymentMethod = "Cash",
+                    Address = new AddressModel()
+                    {
+                        Street1 = "Street1",
+                        Street2  = "Street2",
+                        City = "Yangon",
+                        State = "Yangon",
+                        PostalCode = "121212",
+                        Country = "Myanmar"
+                    },
+
+                    Summary = new ReceiptSummaryModel()
+                    {
+                        Subtotal = model.Price,
+                        ShippingCost = 0,
+                        TotalTax = 0,
+                        TotalCost = model.Price
+                    },
+                    Elements = new List<ReceiptElementModel>()
+                    {
+                       new ReceiptElementModel()
+                       {
+                           Title = model.Name,
+                           Subtitle = "Subtitle",
+                           Quantity = 1,
+                           Price = model.Price,
+                           Currency = "MMK",
+                           Image =   model.ID switch
+                                    {
+                                    "1234567890" => hostURL + "/image/shirts/shirt1.jpg",
+                                    "1234567891" => hostURL + "/image/shirts/shirt1.jpg",
+                                    "1234567892" => hostURL + "/image/shirts/shirt2.jpg",
+                                    "1234567893" => hostURL + "/image/shirts/shirt3.png",
+                                     _ => "",
+                                    }
+                        }
+                    }
+                     
+                };
+
+                flowManager.SendReceiptToChat(order.PageID, order.RecipentID, receipt);
+                
+               return View(model);
+            }
+            catch (Exception ex)
+            {
+                log.LogError("Shopping => " + ex.Message); 
+            }
+
+            return View();
+        }
+
 
         public IActionResult Privacy()
         { 
@@ -96,16 +193,13 @@ namespace FBChat.Controllers
                 awaitMsg.OnCompleted(() => {
                     var request  = awaitMsg.GetResult();
                     log.LogInformation("Entry count " + request.Entries.Count);
+
                     try
                     {
-                        flowManager.ProcessFlow(request, (response, page, api) =>
-                        {
-                            log.LogInformation("Response Type" + response.Message.GetType().Name);
-                            MessageHandler.ResponseMessage(response, page, api);
-                        });
+                        flowManager.ProcessFlow(request);
                     }catch(Exception err)
                     {
-                        log.LogError("Responding error." + err.Message);
+                        log.LogError("ProcessFlow error." + err.Message);
                     }
                     
                 });                
@@ -134,13 +228,7 @@ namespace FBChat.Controllers
             var request = JsonConvert.DeserializeObject<RequestModel>(data);
             log.LogInformation("Entry count " + request.Entries.Count);
 
-            flowManager.ProcessFlow(request, (response, token, api) =>
-            {
-                log.LogInformation("Response Type" + response?.Message.GetType().Name);
-                MessageHandler.ResponseMessage(response, token, api);
-
-               
-            });
+            flowManager.ProcessFlow(request); 
         }
     }
 }

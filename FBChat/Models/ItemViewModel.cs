@@ -11,6 +11,7 @@ namespace FBChat.Models
         public string Descriptions { get; set; }
         public float Price { get; set; }
         public string Summary { get; set; }
+        public string ID { get; internal set; }
     }
 
 

@@ -8,7 +8,7 @@ namespace FacebookMessenger.Models
     public class ReceiptAttachmentPayloadModel : AttachmentPayloadModel
     {
         [JsonProperty("recipient_name")]
-        public string CustomerName { get; set; }
+        public string RecipientName { get; set; }
 
         [JsonProperty("order_number")]
         public string OrderNumber { get; set; }

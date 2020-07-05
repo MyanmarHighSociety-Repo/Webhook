@@ -7,6 +7,9 @@ namespace FacebookMessenger.Models
         [JsonProperty("street_1")]
         public string Street1 { get; set; }
 
+        [JsonProperty("street_2")]
+        public string Street2 { get; set; }
+
         [JsonProperty("city")]
         public string City { get; set; }
 
@@ -16,7 +19,7 @@ namespace FacebookMessenger.Models
         [JsonProperty("state")]
         public string State { get; set; }
 
-        [JsonProperty("ountry")]
+        [JsonProperty("country")]
         public string Country { get; set; }
 
     }

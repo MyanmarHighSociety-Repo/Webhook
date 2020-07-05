@@ -1,5 +1,6 @@
 ﻿using FacebookMessenger;
 using FacebookMessenger.Enums;
+using FacebookMessenger.Helper;
 using FacebookMessenger.Models;
 using FacebookMessenger.Personalization;
 using Newtonsoft.Json;
@@ -183,6 +184,16 @@ namespace FlowController.PageFlows
 
         private void Shopping(ref ResponseModel response)
         {
+            var item0 = new OrderModel()
+            {
+                ItemID = "1234567890",
+                PageID = this.Page.ID,
+                RecipentID = response.Receiver.ID
+            };
+
+
+            var item0Str = Cryptography.encrypt(JsonConvert.SerializeObject(item0));
+
             response.Message = new TemplateMessageModel()
             {
                 Attachment = new AttachmentModel()
@@ -200,7 +211,7 @@ namespace FlowController.PageFlows
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  HostURL + "?item=12312323",
+                                    URL =  HostURL + "/shopping?data=" + item0Str,
                                     WebviewHeight = WebviewHeightRatio.full
                                 },
                                 Buttons = new List<ButtonModel>()
@@ -213,7 +224,7 @@ namespace FlowController.PageFlows
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL = HostURL+"/item?id=12312323"
+                                        URL =  HostURL + "/shopping?data=" + item0Str,
                                     }
                                 }
                             }
@@ -226,8 +237,37 @@ namespace FlowController.PageFlows
 
         private void ViewMore(ref ResponseModel response)
         {
+           var item1 = new OrderModel()
+            {
+                ItemID = "1234567891",
+                PageID = this.Page.ID,
+                RecipentID = response.Receiver.ID
+            } ;
+
+            var item2 = new OrderModel()
+            {
+                ItemID = "1234567892",
+                PageID = this.Page.ID,
+                RecipentID = response.Receiver.ID
+            };
+
+            var item3 = new OrderModel()
+            {
+                ItemID = "1234567893",
+                PageID = this.Page.ID,
+                RecipentID = response.Receiver.ID
+            };
+
+
+            var item1Str = Cryptography.encrypt(JsonConvert.SerializeObject( item1));
+            var item2Str = Cryptography.encrypt(JsonConvert.SerializeObject(item2));
+            var item3Str = Cryptography.encrypt(JsonConvert.SerializeObject(item3));
+
+
+
             response.Message = new TemplateMessageModel()
             {
+
 
                 Attachment = new AttachmentModel()
                 {
@@ -245,7 +285,7 @@ namespace FlowController.PageFlows
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  HostURL + "?item=12312323",
+                                    URL = HostURL+"/shopping?data=" + item1Str,
                                     WebviewHeight = WebviewHeightRatio.compact
                                 },
                                 Buttons = new List<ButtonModel>()
@@ -253,7 +293,7 @@ namespace FlowController.PageFlows
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL = "https://api.shopdoora.com/webhook?item=12312323"
+                                        URL = HostURL+"/shopping?data=" + item1Str
                                     }
                                 }
                             },new ElementModel() {
@@ -263,15 +303,16 @@ namespace FlowController.PageFlows
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  HostURL + "?item=12312323",
-                                    WebviewHeight = WebviewHeightRatio.compact
+                                    WebviewHeight = WebviewHeightRatio.compact,
+                                    URL = HostURL+"/shopping?data=" + item2Str,
+
                                 },
                                 Buttons = new List<ButtonModel>()
                                 {
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL = "https://api.shopdoora.com/webhook?item=12312323"
+                                        URL = HostURL+"/shopping?data=" + item2Str,
                                     }
                                 }
                             },
@@ -282,15 +323,16 @@ namespace FlowController.PageFlows
                                 DefaultAction = new ActionModel()
                                 {
                                     Type = ActionType.web_url,
-                                    URL =  HostURL + "?item=12312323",
-                                    WebviewHeight = WebviewHeightRatio.compact
+                                    WebviewHeight = WebviewHeightRatio.compact,
+                                    URL = HostURL+"/shopping?data=" + item3Str
                                 },
                                 Buttons = new List<ButtonModel>()
                                 {
                                     new ButtonModel() {
                                         Title = "Order",
                                         Type = ActionType.web_url,
-                                        URL = "https://api.shopdoora.com/webhook?item=12312323"
+                                        WebviewHeight = WebviewHeightRatio.compact,
+                                        URL = HostURL+"/shopping?data=" + item3Str
                                     }
                                 }
                             }

@@ -18,9 +18,6 @@ namespace FlowController.PageFlows
             this.Init();
         }
         internal abstract void Init();
-        internal abstract void ProcessFlow(RequestMessagingModel pEntry, Action<ResponseModel,String> actResponse);
-
-       
-
+        internal abstract void ProcessFlow(RequestMessagingModel pEntry, Action<ResponseModel,String> actResponse); 
     }
 }

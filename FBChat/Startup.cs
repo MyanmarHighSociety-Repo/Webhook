@@ -28,6 +28,13 @@ namespace FBChat
         {
             services.AddControllersWithViews();
             services.Configure<FacebookMessenger.Models.FacebookSettingModel>(Configuration.GetSection("FacebookSetting"));
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AdventureWorks.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.IsEssential = true;
+            });
+
             JsonConvert.DefaultSettings = (() =>
             {
                 var settings = new JsonSerializerSettings();
@@ -57,7 +64,7 @@ namespace FBChat
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

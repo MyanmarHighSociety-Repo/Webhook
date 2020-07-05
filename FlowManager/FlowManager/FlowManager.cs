@@ -1,4 +1,6 @@
-﻿using FacebookMessenger.Models;
+﻿using FacebookMessenger;
+using FacebookMessenger.Enums;
+using FacebookMessenger.Models;
 using FlowController.PageFlows;
 using Serilog;
 using System;
@@ -47,7 +49,7 @@ namespace FlowController
             return false;
         }
 
-        public void ProcessFlow(RequestModel request, Action<ResponseModel, String, String> callback)
+        public void ProcessFlow(RequestModel request)
         {
             Log.Information("Start processing message.");
 
@@ -62,11 +64,51 @@ namespace FlowController
                     Log.Information("Flow type is " + pageflow.GetType().Name);
                     
                     pageflow.ProcessFlow(requestMessaging,(response, api) =>
-                     {
-                         callback(response, pageflow.Page.Token, api);
-                     });
+                    {
+                        Log.Information("Response Type" + response?.Message.GetType().Name);
+                        MessageHandler.ResponseMessage(response, pageflow.Page.Token, api);
+                    });
 
                 }
+            }
+        }
+
+        public void SendReceiptToChat(string pageID, string recipentID, ReceiptAttachmentPayloadModel receipt)
+        {
+            Log.Information("Send receipt to FB Chat.");
+            var pageflow = GetPageFlow(pageID);             
+
+            if (pageflow != null)
+            {
+                Log.Information("Flow type is " + pageflow.GetType().Name); 
+
+               var personAwaiter = MessageHandler.GetProfileInfo(recipentID, GetPage(pageID)).GetAwaiter();
+                personAwaiter.OnCompleted(() =>
+                { 
+                    var person = personAwaiter.GetResult();
+                    if(person != null)
+                    {
+                        receipt.RecipientName = person.FirstName + " " + person.LastName;
+                    }                     
+                    var response = new ResponseModel()
+                    {
+                        Receiver = new PersonModel()
+                        {
+                            ID = recipentID
+                        },
+                        MessageType = MessageType.RESPONSE,
+                        Message = new TemplateMessageModel()
+                        {
+                            Attachment = new AttachmentModel()
+                            {
+                                Type = AttachmentType.template,
+                                Payload = receipt
+                            }
+                        }
+                    };
+                    MessageHandler.ResponseMessage(response, pageflow.Page.Token, FacebookApiURL.Message_V70URL);
+                });
+              
             }
         }
 
